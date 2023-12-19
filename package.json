@@ -1,0 +1,27 @@
+{
+  "name": "logseq-plugin-math-editor",
+  "version": "0.1.0",
+  "main": "dist/index.html",
+  "logseq": {
+    "id": "_sethyuan-logseq-math-editor",
+    "icon": "./icon.png"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@logseq/libs": "^0.0.15",
+    "logseq-l10n": "^0.2.0",
+    "mathlive": "^0.98.4"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.5.0",
+    "@types/node": "^18.15.11",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vite-plugin-logseq": "^1.1.2",
+    "vite-plugin-svgr": "^3.2.0"
+  }
+}
