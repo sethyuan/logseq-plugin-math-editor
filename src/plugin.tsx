@@ -118,7 +118,7 @@ function editBtnClickHandler(e: MouseEvent) {
       katexEl.style.display = "none"
     }
     const id = target.id
-    const oldValue = target.querySelector("annotation")!.textContent
+    const oldValue = target.querySelector("annotation")!.textContent ?? ""
     logseq.provideUI({
       key: `kef-me-${id}`,
       path: `[id="${id}"]`,
@@ -127,16 +127,7 @@ function editBtnClickHandler(e: MouseEvent) {
       </div>`,
     })
     setTimeout(() => {
-      const containerEl = parent.document.getElementById(`kef-me-${id}`)!
-      containerEl.addEventListener("keydown", stopHandler)
-      containerEl.addEventListener("mousedown", stopHandler)
-
-      const mfe = new (parent as any).MathfieldElement()
-      mfe.value = oldValue
-      mfe.classList.add("kef-me-editor-block")
-      containerEl.prepend(mfe)
-      mfe.menuItems = []
-      mfe.focus()
+      initEditor(id, oldValue, "kef-me-editor-block")
     }, 0)
   } else if (
     target.classList.contains("latex-inline") &&
@@ -153,7 +144,7 @@ function editBtnClickHandler(e: MouseEvent) {
       katexEl.style.display = "none"
     }
     const id = target.id
-    const oldValue = target.querySelector("annotation")!.textContent
+    const oldValue = target.querySelector("annotation")!.textContent ?? ""
     logseq.provideUI({
       key: `kef-me-${id}`,
       path: `[id="${id}"]`,
@@ -165,22 +156,42 @@ function editBtnClickHandler(e: MouseEvent) {
       },
     })
     setTimeout(() => {
-      const containerEl = parent.document.getElementById(`kef-me-${id}`)!
-      containerEl.addEventListener("keydown", stopHandler)
-      containerEl.addEventListener("mousedown", stopHandler)
-
-      const mfe = new (parent as any).MathfieldElement()
-      mfe.value = oldValue
-      mfe.classList.add("kef-me-editor-inline")
-      containerEl.prepend(mfe)
-      mfe.menuItems = []
-      mfe.focus()
+      initEditor(id, oldValue, "kef-me-editor-inline")
     }, 0)
   }
 }
 
 function stopHandler(e: Event) {
   e.stopPropagation()
+}
+
+function initEditor(id: string, oldValue: string, cls: string) {
+  const containerEl = parent.document.getElementById(`kef-me-${id}`)!
+  containerEl.addEventListener("keydown", stopHandler)
+  containerEl.addEventListener("mousedown", stopHandler)
+
+  const mfe = new (parent as any).MathfieldElement()
+  mfe.value = oldValue
+  mfe.classList.add(cls)
+  containerEl.prepend(mfe)
+  mfe.menuItems = []
+  mfe.inlineShortcuts.dx.value = "\\mathrm{d}x"
+  mfe.inlineShortcuts.dy.value = "\\mathrm{d}y"
+  mfe.inlineShortcuts.dt.value = "\\mathrm{d}t"
+  mfe.keybindings = [
+    ...mfe.keybindings,
+    {
+      key: "ctrl+,",
+      ifMode: "math",
+      command: "addColumnAfter",
+    },
+    {
+      key: "ctrl+shift+,",
+      ifMode: "math",
+      command: "addColumnBefore",
+    },
+  ]
+  mfe.focus()
 }
 
 async function updateMath(id: string, oldValue: string) {
