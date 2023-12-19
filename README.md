@@ -6,6 +6,8 @@ Easier editing of math formulas.
 
 ## Usage
 
+https://github.com/sethyuan/logseq-plugin-math-editor/assets/3410293/edd5a727-d1c9-439d-af9a-c78bafe41c9c
+
 ## Buy me a coffee
 
 If you think the software I have developed is helpful to you and would like to give recognition and support, you may buy me a coffee using following link. Thank you for your support and attention.
