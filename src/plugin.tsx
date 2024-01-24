@@ -100,15 +100,13 @@ function editBtnClickHandler(e: MouseEvent) {
   if (!isElement(e.target)) return
 
   const target = e.target
-  const h = target.offsetLeft + target.offsetWidth
-  const v = target.offsetTop + target.offsetHeight
 
   if (
     target.classList.contains("latex") &&
-    e.offsetX >= h - 5 - 18 &&
-    e.offsetX <= h &&
+    e.offsetX >= target.offsetWidth - 5 - 18 &&
+    e.offsetX <= target.offsetWidth &&
     e.offsetY >= 0 &&
-    e.offsetY <= v
+    e.offsetY <= target.offsetHeight
   ) {
     e.preventDefault()
     e.stopPropagation()
@@ -131,10 +129,10 @@ function editBtnClickHandler(e: MouseEvent) {
     }, 0)
   } else if (
     target.classList.contains("latex-inline") &&
-    e.offsetX >= h - 16 &&
-    e.offsetX <= h &&
+    e.offsetX >= target.offsetLeft + target.offsetWidth - 16 &&
+    e.offsetX <= target.offsetLeft + target.offsetWidth &&
     e.offsetY >= 0 &&
-    e.offsetY <= v
+    e.offsetY <= target.offsetTop + target.offsetHeight
   ) {
     e.preventDefault()
     e.stopPropagation()
